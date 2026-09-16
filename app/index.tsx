@@ -8,17 +8,21 @@ import {
   State,
 } from "@/lib/api/types";
 import { styles } from "@/styles/GlobalStyles";
+import { useRouter } from "expo-router";
 import { useRef, useState } from "react";
 import {
   ActivityIndicator,
   Button,
   FlatList,
+  Pressable,
   Text,
   TextInput,
   View,
 } from "react-native";
 
 const SearchScreen = () => {
+  const router = useRouter();
+
   const [title, setTitle] = useState("");
   const [type, setType] = useState<MovieType | "">("");
   const [year, setYear] = useState("");
@@ -136,7 +140,18 @@ const SearchScreen = () => {
           data={movies.data}
           keyExtractor={(item) => item.imdbID}
           contentContainerStyle={styles.list}
-          renderItem={({ item }) => <MovieCard movie={item} />}
+          renderItem={({ item }) => (
+            <Pressable
+              onPress={() =>
+                router.push({
+                  pathname: "/movie/[id]",
+                  params: { id: item.imdbID },
+                })
+              }
+            >
+              <MovieCard movie={item} />
+            </Pressable>
+          )}
         />
       )}
     </View>

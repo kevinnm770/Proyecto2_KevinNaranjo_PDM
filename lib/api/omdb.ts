@@ -1,5 +1,10 @@
 import { request } from "./omdb-client";
-import { OmdbSearchItem, OmdbSearchResponse, SearchFilters } from "./types";
+import {
+  OmdbMovieDetail,
+  OmdbSearchItem,
+  OmdbSearchResponse,
+  SearchFilters,
+} from "./types";
 
 // OMDb responde "Movie not found!" cuando la busqueda no da resultados.
 // Para la app eso no es un error, es una lista vacia.
@@ -22,4 +27,11 @@ export async function searchMovies(
     }
     throw error;
   }
+}
+
+export async function getMovieById(
+  id: string,
+  signal?: AbortSignal,
+): Promise<OmdbMovieDetail> {
+  return request<OmdbMovieDetail>({ i: id, plot: "short" }, signal);
 }

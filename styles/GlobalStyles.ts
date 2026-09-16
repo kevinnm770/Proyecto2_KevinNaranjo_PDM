@@ -108,4 +108,57 @@ export const styles = StyleSheet.create({
     fontSize: 13,
     color: "#666666",
   },
+  detailScreen: {
+    padding: 16,
+    paddingBottom: 32,
+    backgroundColor: "#ffffff",
+  },
+  detailPoster: {
+    width: 180,
+    height: 270,
+    borderRadius: 8,
+    alignSelf: "center",
+    backgroundColor: "#eeeeee",
+  },
+  detailTitle: {
+    marginTop: 16,
+    fontSize: 20,
+    fontWeight: "700",
+    textAlign: "center",
+  },
+  detailSubtitle: {
+    marginTop: 4,
+    fontSize: 13,
+    color: "#666666",
+    textAlign: "center",
+  },
+  detailRating: {
+    marginTop: 8,
+    fontSize: 15,
+    color: "#1e6fd9",
+    fontWeight: "600",
+    textAlign: "center",
+  },
+  detailPlot: {
+    marginTop: 16,
+    fontSize: 14,
+    lineHeight: 20,
+    color: "#333333",
+  },
+  detailList: {
+    marginTop: 16,
+    gap: 8,
+  },
+  detailRow: {
+    gap: 2,
+  },
+  detailLabel: {
+    fontSize: 12,
+    color: "#888888",
+    textTransform: "uppercase",
+  },
+  detailValue: {
+    fontSize: 14,
+    color: "#222222",
+  },
 });
