@@ -1,10 +1,18 @@
 import { DetailRow } from "@/components/DetailRow";
+import { addFavorite, isFavorite, removeFavorite } from "@/db/favorites";
 import { getMovieById } from "@/lib/api/omdb";
 import { OmdbMovieDetail, State } from "@/lib/api/types";
 import { styles } from "@/styles/GlobalStyles";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Image, ScrollView, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Image,
+  Pressable,
+  ScrollView,
+  Text,
+  View,
+} from "react-native";
 
 // OMDb rellena con "N/A" los campos que no tiene, asi que los tratamos
 // como ausentes en vez de imprimir "N/A" en pantalla.
@@ -18,6 +26,8 @@ const MovieDetailScreen = () => {
     loading: false,
     error: null,
   });
+
+  const [favorite, setFavorite] = useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -43,6 +53,11 @@ const MovieDetailScreen = () => {
     return () => controller.abort();
   }, [id]);
 
+  // Estado inicial del boton: lo decide la base de datos, no la API.
+  useEffect(() => {
+    isFavorite(id).then(setFavorite);
+  }, [id]);
+
   const detail = movie.data;
   const poster = detail ? omdbValue(detail.Poster) : null;
 
@@ -53,6 +68,20 @@ const MovieDetailScreen = () => {
         .filter((part) => part !== null)
         .join("  ·  ")
     : "";
+
+  const handleToggleFavorite = async () => {
+    if (!detail) {
+      return;
+    }
+
+    if (favorite) {
+      await removeFavorite(detail.imdbID);
+      setFavorite(false);
+    } else {
+      await addFavorite(detail);
+      setFavorite(true);
+    }
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.detailScreen}>
@@ -81,6 +110,23 @@ const MovieDetailScreen = () => {
               ★ {detail.imdbRating} / 10 en IMDb
             </Text>
           )}
+
+          <Pressable
+            onPress={handleToggleFavorite}
+            style={[
+              styles.favoriteButton,
+              favorite && styles.favoriteButtonActive,
+            ]}
+          >
+            <Text
+              style={[
+                styles.favoriteButtonText,
+                favorite && styles.favoriteButtonTextActive,
+              ]}
+            >
+              {favorite ? "★  En favoritos" : "☆  Guardar en favoritos"}
+            </Text>
+          </Pressable>
 
           {omdbValue(detail.Plot) && (
             <Text style={styles.detailPlot}>{detail.Plot}</Text>

@@ -161,4 +161,23 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     color: "#222222",
   },
+  favoriteButton: {
+    marginTop: 16,
+    borderWidth: 1,
+    borderColor: "#1e6fd9",
+    borderRadius: 8,
+    paddingVertical: 12,
+    alignItems: "center",
+  },
+  favoriteButtonActive: {
+    backgroundColor: "#1e6fd9",
+  },
+  favoriteButtonText: {
+    fontSize: 15,
+    fontWeight: "600",
+    color: "#1e6fd9",
+  },
+  favoriteButtonTextActive: {
+    color: "#ffffff",
+  },
 });
