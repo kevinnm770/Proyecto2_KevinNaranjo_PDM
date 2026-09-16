@@ -16,6 +16,15 @@ export interface OmdbSearchResponse {
   Error?: string;
 }
 
+// Categorias que OMDb acepta en el parametro "type".
+export type MovieType = "movie" | "series" | "episode";
+
+// Cadena vacia = sin filtrar. buildQuery() descarta los campos vacios.
+export interface SearchFilters {
+  type: MovieType | "";
+  year: string;
+}
+
 // Estado unico para cualquier peticion: datos, carga y error.
 export interface State<T> {
   data: T | null;

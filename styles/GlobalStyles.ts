@@ -20,6 +20,41 @@ export const styles = StyleSheet.create({
     paddingVertical: 8,
     fontSize: 15,
   },
+  chipRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+    marginTop: 12,
+  },
+  chip: {
+    borderWidth: 1,
+    borderColor: "#cccccc",
+    borderRadius: 16,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+  },
+  chipSelected: {
+    borderColor: "#1e6fd9",
+    backgroundColor: "#1e6fd9",
+  },
+  chipText: {
+    fontSize: 13,
+    color: "#444444",
+  },
+  chipTextSelected: {
+    color: "#ffffff",
+    fontWeight: "600",
+  },
+  yearInput: {
+    marginTop: 12,
+    width: 140,
+    borderWidth: 1,
+    borderColor: "#cccccc",
+    borderRadius: 6,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    fontSize: 15,
+  },
   feedback: {
     marginTop: 24,
   },
