@@ -38,3 +38,12 @@ export async function isFavorite(imdbId: string): Promise<boolean> {
 
   return rows.length > 0;
 }
+
+// rating va de 1 a 5, o null para quitar la puntuacion sin dejar de
+// tener la pelicula guardada.
+export async function setRating(
+  imdbId: string,
+  rating: number | null,
+): Promise<void> {
+  await db.update(favorites).set({ rating }).where(eq(favorites.imdbId, imdbId));
+}

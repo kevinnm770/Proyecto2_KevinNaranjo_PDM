@@ -1,4 +1,5 @@
 import { DetailRow } from "@/components/DetailRow";
+import { StarRating } from "@/components/StarRating";
 import { getMovieById } from "@/lib/api/omdb";
 import { OmdbMovieDetail, State } from "@/lib/api/types";
 import { useFavorites } from "@/hooks/useFavorites";
@@ -27,7 +28,7 @@ const MovieDetailScreen = () => {
     error: null,
   });
 
-  const { isFavorite, toggleFavorite } = useFavorites();
+  const { isFavorite, toggleFavorite, rate, getRating } = useFavorites();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -67,6 +68,15 @@ const MovieDetailScreen = () => {
   // El contexto ya tiene la lista en memoria, asi que no hace falta
   // consultar la base para saber si esta guardada.
   const favorite = detail !== null && isFavorite(detail.imdbID);
+  const myRating = detail !== null ? getRating(detail.imdbID) : null;
+
+  const handleRate = (star: number) => {
+    if (!detail) {
+      return;
+    }
+    // Tocar la estrella que ya estaba puesta quita la puntuacion.
+    rate(detail, star === myRating ? null : star);
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.detailScreen}>
@@ -112,6 +122,16 @@ const MovieDetailScreen = () => {
               {favorite ? "★  En favoritos" : "☆  Guardar en favoritos"}
             </Text>
           </Pressable>
+
+          <View style={styles.ratingBlock}>
+            <Text style={styles.ratingLabel}>Tu puntuación</Text>
+            <StarRating value={myRating} onChange={handleRate} />
+            <Text style={styles.ratingHint}>
+              {myRating === null
+                ? "Puntuarla también la guarda en favoritos."
+                : "Tocá la misma estrella para quitar la puntuación."}
+            </Text>
+          </View>
 
           {omdbValue(detail.Plot) && (
             <Text style={styles.detailPlot}>{detail.Plot}</Text>

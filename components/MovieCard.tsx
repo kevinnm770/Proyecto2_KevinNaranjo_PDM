@@ -9,11 +9,13 @@ type Props = {
   poster: string | null;
   // Espacio para una accion al final de la tarjeta, como "Quitar".
   right?: ReactNode;
+  // Espacio bajo el anio, para la puntuacion en la lista de favoritos.
+  footer?: ReactNode;
 };
 
 // Presentacional a proposito: no conoce los tipos de OMDb ni los de la
 // base, asi la usan igual la busqueda y la lista de favoritos.
-export const MovieCard = ({ title, year, poster, right }: Props) => (
+export const MovieCard = ({ title, year, poster, right, footer }: Props) => (
   <View style={styles.card}>
     {poster ? (
       <Image source={{ uri: poster }} style={styles.poster} />
@@ -28,6 +30,7 @@ export const MovieCard = ({ title, year, poster, right }: Props) => (
         {title}
       </Text>
       <Text style={styles.cardYear}>{year}</Text>
+      {footer}
     </View>
 
     {right}

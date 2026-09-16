@@ -1,4 +1,5 @@
 import { MovieCard } from "@/components/MovieCard";
+import { StarRating } from "@/components/StarRating";
 import { useFavorites } from "@/hooks/useFavorites";
 import { styles } from "@/styles/GlobalStyles";
 import { useRouter } from "expo-router";
@@ -46,6 +47,7 @@ const FavoritesScreen = () => {
               title={item.title}
               year={item.year}
               poster={item.poster}
+              footer={<StarRating value={item.rating} />}
               right={
                 <Pressable
                   onPress={() => remove(item.imdbId)}

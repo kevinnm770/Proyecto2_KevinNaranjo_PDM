@@ -202,4 +202,35 @@ export const styles = StyleSheet.create({
     color: "#cc0000",
     fontWeight: "600",
   },
+  ratingBlock: {
+    marginTop: 20,
+    alignItems: "center",
+    gap: 6,
+  },
+  ratingLabel: {
+    fontSize: 12,
+    color: "#888888",
+    textTransform: "uppercase",
+  },
+  ratingHint: {
+    fontSize: 12,
+    color: "#999999",
+  },
+  starsRow: {
+    flexDirection: "row",
+    gap: 6,
+  },
+  star: {
+    fontSize: 30,
+    color: "#cccccc",
+  },
+  starFilled: {
+    color: "#f0a500",
+  },
+  starsReadOnly: {
+    marginTop: 2,
+    fontSize: 13,
+    color: "#f0a500",
+    letterSpacing: 1,
+  },
 });
