@@ -1,7 +1,7 @@
 import { DetailRow } from "@/components/DetailRow";
-import { addFavorite, isFavorite, removeFavorite } from "@/db/favorites";
 import { getMovieById } from "@/lib/api/omdb";
 import { OmdbMovieDetail, State } from "@/lib/api/types";
+import { useFavorites } from "@/hooks/useFavorites";
 import { styles } from "@/styles/GlobalStyles";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
@@ -27,7 +27,7 @@ const MovieDetailScreen = () => {
     error: null,
   });
 
-  const [favorite, setFavorite] = useState(false);
+  const { isFavorite, toggleFavorite } = useFavorites();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -53,11 +53,6 @@ const MovieDetailScreen = () => {
     return () => controller.abort();
   }, [id]);
 
-  // Estado inicial del boton: lo decide la base de datos, no la API.
-  useEffect(() => {
-    isFavorite(id).then(setFavorite);
-  }, [id]);
-
   const detail = movie.data;
   const poster = detail ? omdbValue(detail.Poster) : null;
 
@@ -69,19 +64,9 @@ const MovieDetailScreen = () => {
         .join("  ·  ")
     : "";
 
-  const handleToggleFavorite = async () => {
-    if (!detail) {
-      return;
-    }
-
-    if (favorite) {
-      await removeFavorite(detail.imdbID);
-      setFavorite(false);
-    } else {
-      await addFavorite(detail);
-      setFavorite(true);
-    }
-  };
+  // El contexto ya tiene la lista en memoria, asi que no hace falta
+  // consultar la base para saber si esta guardada.
+  const favorite = detail !== null && isFavorite(detail.imdbID);
 
   return (
     <ScrollView contentContainerStyle={styles.detailScreen}>
@@ -112,7 +97,7 @@ const MovieDetailScreen = () => {
           )}
 
           <Pressable
-            onPress={handleToggleFavorite}
+            onPress={() => detail && toggleFavorite(detail)}
             style={[
               styles.favoriteButton,
               favorite && styles.favoriteButtonActive,

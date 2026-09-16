@@ -149,7 +149,11 @@ const SearchScreen = () => {
                 })
               }
             >
-              <MovieCard movie={item} />
+              <MovieCard
+                title={item.Title}
+                year={item.Year}
+                poster={item.Poster === "N/A" ? null : item.Poster}
+              />
             </Pressable>
           )}
         />

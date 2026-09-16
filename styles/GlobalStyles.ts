@@ -180,4 +180,26 @@ export const styles = StyleSheet.create({
   favoriteButtonTextActive: {
     color: "#ffffff",
   },
+  headerButton: {
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+  },
+  headerButtonText: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#1e6fd9",
+  },
+  removeButton: {
+    alignSelf: "center",
+    borderWidth: 1,
+    borderColor: "#cc0000",
+    borderRadius: 6,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+  },
+  removeButtonText: {
+    fontSize: 13,
+    color: "#cc0000",
+    fontWeight: "600",
+  },
 });
